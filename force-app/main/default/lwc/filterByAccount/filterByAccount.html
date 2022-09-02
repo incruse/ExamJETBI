@@ -1,0 +1,25 @@
+<template>
+    <lightning-layout>
+        <lightning-layout-item size="6" padding="around-small">
+            <lightning-combobox
+                    name="account"
+                    label="Account"
+                    value={selectedAccount}
+                    placeholder="Select Account"
+                    options={accountsOptions}
+                    onchange={handleChange}>
+            </lightning-combobox>
+        </lightning-layout-item>
+
+        <lightning-layout-item size="6" padding="around-small">
+            <lightning-combobox
+                    name="month"
+                    label="Month"
+                    value={selectedMonth}
+                    placeholder="Select month"
+                    options={monthsOptions}
+                    onchange={handleChange}>
+            </lightning-combobox>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

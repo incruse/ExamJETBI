@@ -1,0 +1,22 @@
+<template>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered" border="1" cellspacing="0" cellpadding="0" bordercolor="#ccc" style="border-collapse:collapse;">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Account</th>
+            <th>Total Amount</th>
+            <th>Payment Due Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <template for:each={records} for:item="order">
+            <tr key={order.Id}>
+                <td><a onclick={openAccountRecordHandler}>{order.Name}</a></td>
+                <td>{order.Account__c}</td>
+                <td>{order.Total_Amount__c}</td>
+                <td>{order.Payment_Due_Date__c}</td>
+            </tr>
+        </template>
+        </tbody>
+    </table>
+</template>

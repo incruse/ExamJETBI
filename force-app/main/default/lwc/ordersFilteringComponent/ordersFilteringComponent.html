@@ -1,0 +1,12 @@
+<template>
+    <lightning-card>
+        <lightning-layout>
+            <lightning-layout-item size="12">
+                <c-filtering-actions onaccountselected={getAccountFilter} onmonthselected={getMonthFilter}>
+                </c-filtering-actions>
+                <c-orders-result tittle="Orders:" records={records}>
+                </c-orders-result>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>
