@@ -1,56 +1,76 @@
 public with sharing class filteringActionsController {
-    private static Map<String, String> none = new Map<String, String>{
-        'label' => '--None--',
-        'value' => '--None--'
+    private static Map<String, String> noneOptions = new Map<String, String>{
+            'label' => Label.None,
+            'value' => Label.None
     };
 
     @AuraEnabled(Cacheable=true)
-    public static List<Map<String, String>> getAccountOptions() {
-        List<Map<String, String>> accountsOptions = new List<Map<String, String>>();
+    public static List<Map<String, String>> getAccountOptions(){
+        try {
+            return fetchAccounts();
+        } catch (Exception ex){
+            throw new IllegalArgumentException('Error :' + ex.getMessage());
+        }
+    }
 
-        for (Account acc : [SELECT Id, Name, (SELECT Id, Payment_Due_Date__c FROM Orders__r) FROM Account WHERE Id IN (SELECT Account__c FROM Order__c) ORDER BY Name]) {
+    @AuraEnabled(Cacheable=true)
+    public static List<Map<String, String>> getMonthOptions(String selectedAccount){
+        if (String.isBlank(selectedAccount)){
+            throw new IllegalArgumentException('Missing select Account Id in getMonthOptions method.');
+        }
+        try {
+            return fetchMonth(selectedAccount);
+        } catch (Exception ex){
+            throw new IllegalArgumentException('Error: ' + ex.getMessage());
+        }
+    }
+
+    private static List<Map<String, String>> fetchAccounts(){
+        List<Map<String, String>> result = new List<Map<String, String>>();
+        List<Account> accounts = [SELECT Id,
+                                      Name,
+                                      (SELECT Id, Payment_Due_Date__c FROM Orders__r)
+                                  FROM Account
+                                  WHERE Id IN (SELECT Account__c FROM Order__c)
+                                  ORDER BY Name ASC
+                                  LIMIT 49999];
+        if(accounts.isEmpty()){
+             throw new IllegalArgumentException('No Accounts with related Orders!');
+        }
+        for (Account acc : accounts){
             Map<String, String> values = new Map<String, String>();
             values.put('label' , acc.Name);
-            values.put('value', acc.Name);
-            accountsOptions.add(values);
+            values.put('value', String.valueOf(acc.Id));
+            result.add(values);
         }
-        accountsOptions.add(0, none);
-        return accountsOptions;
+        result.add(0, noneOptions);
+        return result;
     }
-    @AuraEnabled(Cacheable=true)
-    public static List<Map<String, String>> getMonthOptions(String selectedAccount) {
-        List<Map<String, String>> options = new List<Map<String, String>>();
+
+    private static List<Map<String, String>> fetchMonth(String selectedAccount){
+        List<Map<String, String>> result = new List<Map<String, String>>();
         Set<Map<String, String>> monthOptions = new Set<Map<String, String>>();
-
-            for (Account acc : [SELECT Id, Name, (SELECT Id, Payment_Due_Date__c FROM Orders__r) FROM Account WHERE Id IN (SELECT Account__c FROM Order__c) ORDER BY Name]) {
-                if (acc.Name == selectedAccount) {
-                    for (Order__c order : acc.Orders__r) {
-                        Map<String, String> month = new Map<String, String>();
-                        Date ddt = order.Payment_Due_Date__c;
-                        String monthName = DateTime.newInstance(ddt.year(), ddt.month(), ddt.day()).format('MMMMM');
-
-                        month.put('label' , monthName);
-                        month.put('value', String.valueOf(ddt.month()));
-                        monthOptions.add(month);
-                    }
-                }
-            }
-
-        List<Integer> avielebleMonth = new List<Integer>();
-        for (Map<String, String> item : monthOptions) {
-            avielebleMonth.add(Integer.valueOf(item.get('value')));
+        String query = 'SELECT Id, Name, Payment_Due_Date__c, Account__c';
+        query += ' FROM Order__c';
+        if(String.isNotBlank(selectedAccount)){
+            query += ' WHERE Account__c = :selectedAccount';
         }
-
-        avielebleMonth.sort();
-        for (Integer i : avielebleMonth) {
-            for (Map<String, String> item : monthOptions) {
-                String rr = item.get('value');
-                if (rr == String.valueOf(i)) {
-                    options.add(item);
-                }
-            }
+        query += ' GROUP BY Id, Name, Payment_Due_Date__c, Account__c';
+        query += ' ORDER BY CALENDAR_MONTH(Payment_Due_Date__c) ASC';
+        AggregateResult[] queryResult = Database.query(query);
+        if (queryResult.isEmpty()){
+            throw new IllegalArgumentException('No orders matches');
         }
-        options.add(0, none);
-        return options;
+        for (AggregateResult arg : queryResult){
+            Map<String, String> month = new Map<String, String>();
+            Date ddt = Date.valueOf(arg.get('Payment_Due_Date__c'));
+            String monthName = Datetime.newInstance(ddt.year(), ddt.month(), ddt.day()).format('MMMMM');
+            month.put('label' , monthName);
+            month.put('value', String.valueOf(ddt.month()));
+            monthOptions.add(month);
+        }
+        result.addAll(monthOptions);
+        result.add(0, noneOptions);
+        return result;
     }
 }
