@@ -1,27 +1,45 @@
 import { LightningElement , track, wire, api} from 'lwc';
-import getOrders from '@salesforce/apex/ordersResultController.getOrders';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getOrders from '@salesforce/apex/OrdersResultController.getOrders';
+import title from '@salesforce/label/c.Orders';
+import labelError from '@salesforce/label/c.Error';
+import labelLoading from '@salesforce/label/c.Loading';
 
 export default class OrdersFilteringComponent extends LightningElement {
+    labelLoading = this.labelLoading;
     selectedAccount = '';
     selectedMonth = '';
-    @track records;
+    @track records = [];
+    isLoaded = false;
+    title = title;
 
-    @wire(getOrders, {selectedAccount: '$selectedAccount', selectedMonth: '$selectedMonth'}) waredOrders (result, error) {
-        if (result && result?.data) {
+    @wire(getOrders, {selectedAccount: '$selectedAccount', selectedMonth: '$selectedMonth'}) waredOrders(result, error){
+        if (result && result?.data){
             this.records = JSON.parse(JSON.stringify(result.data));
-            this.records.forEach(item => item['Order Name'] = '/lightning/r/Order__c/' +item['Id'] +'/view');
-            this.error = undefined;
+            this.records.forEach(item => item['Order Name'] = '/' + item['Id']);
+            this.isLoaded = false;
         } else if (error) {
-            this.error = result.error;
-            this.records = undefined;
+            this.showToast(labelError + '! ', error, 'error');
+            this.records = [];
         }
     }
 
-    getAccountFilter(event) {
+    getAccountFilter(event){
+        this.isLoaded = true;
         this.selectedAccount = event.detail;
     }
 
-    getMonthFilter(event) {
+    getMonthFilter(event){
+        this.isLoaded = true;
         this.selectedMonth = event.detail;
+    }
+
+    showToast(title, message, variant){
+        const event = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant
+        });
+        this.dispatchEvent(event);
     }
 }

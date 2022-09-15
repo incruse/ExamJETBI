@@ -2,23 +2,23 @@
     <lightning-layout>
         <lightning-layout-item size="6" padding="around-small">
             <lightning-combobox
-                    name="account"
-                    label="Account"
-                    value={selectedAccount}
-                    placeholder="Select Account"
-                    options={accounts}
-                    onchange={filterByAccount}>
+                name="account"
+                label={labels.labelAccount}
+                value={selectedAccount}
+                placeholder={labels.accountPicklistPlaceholder}
+                options={accounts}
+                onchange={filterByAccount}>
             </lightning-combobox>
         </lightning-layout-item>
 
         <lightning-layout-item size="6" padding="around-small">
             <lightning-combobox
-                    name="month"
-                    label="Month"
-                    value={selectedMonth}
-                    placeholder="Select month"
-                    options={month}
-                    onchange={filterByMonth}>
+                name="month"
+                label={labels.labelMonth}
+                value={selectedMonth}
+                placeholder={labels.monthPicklistPlaceholder}
+                options={month}
+                onchange={filterByMonth}>
             </lightning-combobox>
         </lightning-layout-item>
     </lightning-layout>

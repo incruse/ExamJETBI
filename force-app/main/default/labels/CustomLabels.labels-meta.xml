@@ -1,10 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account</shortDescription>
+        <value>Account</value>
+    </labels>
+    <labels>
+        <fullName>EmailTemplateIsNotFind</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email template is not find!</shortDescription>
+        <value>Email template is not find!</value>
+    </labels>
+    <labels>
+        <fullName>Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>Loading</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Loading</shortDescription>
+        <value>Loading...</value>
+    </labels>
+    <labels>
+        <fullName>MissingSelectAccountIdInGetMonthOptionsMethod</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Missing select Account Id in getMonthOptions method.</shortDescription>
+        <value>Missing select Account Id in getMonthOptions method.</value>
+    </labels>
+    <labels>
+        <fullName>Month</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Month</shortDescription>
+        <value>Month</value>
+    </labels>
+    <labels>
+        <fullName>Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>NoAccountsWithRelatedOrders</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No Accounts with related Orders!</shortDescription>
+        <value>No Accounts with related Orders!</value>
+    </labels>
+    <labels>
+        <fullName>NoMatchIdOfRecord</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No match Id of record!</shortDescription>
+        <value>No match Id of record!</value>
+    </labels>
+    <labels>
+        <fullName>NoOrdersMatches</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No orders matches</shortDescription>
+        <value>No orders matches</value>
+    </labels>
+    <labels>
         <fullName>None</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>None</shortDescription>
         <value>--None--</value>
+    </labels>
+    <labels>
+        <fullName>Orders</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Orders</shortDescription>
+        <value>Orders:</value>
+    </labels>
+    <labels>
+        <fullName>PaymentDueDate</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Payment Due Date</shortDescription>
+        <value>Payment Due Date</value>
+    </labels>
+    <labels>
+        <fullName>PlaceholderAccountOption</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Placeholder Account Option</shortDescription>
+        <value>Select Account</value>
+    </labels>
+    <labels>
+        <fullName>PlaceholderMonthOption</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Placeholder Month Option</shortDescription>
+        <value>Select Month</value>
+    </labels>
+    <labels>
+        <fullName>Success</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Success</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
+        <fullName>TheRecord</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>The record</shortDescription>
+        <value>The record</value>
+    </labels>
+    <labels>
+        <fullName>TotalAmount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Total Amount</shortDescription>
+        <value>Total Amount</value>
+    </labels>
+    <labels>
+        <fullName>successfullySent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>successfully sent</shortDescription>
+        <value>successfully sent to</value>
     </labels>
 </CustomLabels>

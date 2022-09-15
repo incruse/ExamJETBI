@@ -1,17 +1,15 @@
 <template>
-    <lightning-card title={tittle} icon-name="standard:contact" onclick={clickHandler}>
-        <br/>
-        <div style="width: auto;">
+    <lightning-card title={title} icon-name="standard:contact" onclick={clickHandler}>
             <template if:true={records}>
-                <lightning-datatable data={records}
-                                     columns={columns}
-                                     key-field="id"
-                                     sorted-by={sortBy}
-                                     sorted-direction={sortDirection}
-                                     onsort={doSorting}
-                                     hide-checkbox-column="true">
+                <lightning-datatable
+                    data={records}
+                    columns={columns}
+                    key-field="id"
+                    sorted-by={sortBy}
+                    sorted-direction={sortDirection}
+                    onsort={doSorting}
+                    hide-checkbox-column="true">
                 </lightning-datatable>
             </template>
-        </div>
     </lightning-card>
 </template>

@@ -1,43 +1,48 @@
 import { LightningElement, api, track } from 'lwc';
+import nameLabel from '@salesforce/label/c.Name';
+import accountLabel from '@salesforce/label/c.Account';
+import totalAmountLabel from '@salesforce/label/c.TotalAmount';
+import paymentDueDateLabel from '@salesforce/label/c.PaymentDueDate';
 
-const columns = [ { label: 'Name', fieldName: 'Order Name', sortable: "true" , type: 'url' ,typeAttributes: {label: { fieldName: 'Name' }}},
-                  { label: 'Account', fieldName: 'Account__c', sortable: "true"},
-                  { label: 'Total Amount', fieldName: 'Total_Amount__c', type: 'number', sortable: "true"},
-                  { label: 'Payment Due Data', fieldName: 'Payment_Due_Date__c', type: 'Date', sortable: "true" },];
+const columns = [
+    { label: nameLabel, fieldName: 'Order Name', sortable: "true" , type: 'url' ,typeAttributes: {label: { fieldName: 'Name' }}},
+    { label: accountLabel, fieldName: 'Account__c', sortable: "true"},
+    { label: totalAmountLabel, fieldName: 'Total_Amount__c', type: 'number', sortable: "true"},
+    { label: paymentDueDateLabel, fieldName: 'Payment_Due_Date__c', type: 'Date', sortable: "true" }
+];
 
 export default class DataTableSortingLWC extends LightningElement {
-    @api tittle;
+    @api title;
     @track _records;
     @track columns = columns;
     @track sortBy;
     @track sortDirection;
 
     @api
-    get records() {
+    get records(){
         return this._records;
     }
-    set records(value) {
-        if (!value) {
+    set records(value){
+        if (!value){
             return;
         }
         this._records = JSON.parse(JSON.stringify(value));
-        console.log(JSON.parse(JSON.stringify(value)));
     }
 
-    doSorting(event) {
-            this.sortBy = event.detail.fieldName;
-            this.sortDirection = event.detail.sortDirection;
-            this.sortData(this.sortBy, this.sortDirection);
+    doSorting(event){
+        this.sortBy = event.detail.fieldName;
+        this.sortDirection = event.detail.sortDirection;
+        this.sortData(this.sortBy, this.sortDirection);
     }
 
-    sortData(fieldname, direction) {
+    sortData(fieldName, direction){
         let parseData = JSON.parse(JSON.stringify(this._records));
         let keyValue = (a) => {
-            return a[fieldname];
+            return a[fieldName];
         };
         let isReverse = direction === 'asc' ? 1: -1;
         parseData.sort((x, y) => {
-            x = keyValue(x) ? keyValue(x) : ''; // handling null values
+            x = keyValue(x) ? keyValue(x) : '';
             y = keyValue(y) ? keyValue(y) : '';
             return isReverse * ((x > y) - (y > x));
         });
