@@ -1,20 +1,40 @@
-public without sharing class EmailHandler {
+public with sharing class EmailHandler {
     @AuraEnabled
-    public static String sendEmail(Id recordId) {
-        Order__c recordToSend = [SELECT Id, Name, Total_Amount__c, Payment_Due_Date__c, Account__c FROM Order__c WHERE Id = :recordId LIMIT 1].get(0);
-        Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(
-            [SELECT Id, Name FROM EmailTemplate WHERE Id = '00X7Q000000y8jdUAA'].Id,
-            UserInfo.getUserId(),
-            recordToSend.Id);
+    public static String sendEmail(Id recordId){
+        if (recordId == null){
+            throw new IllegalArgumentException(Label.NoMatchIdOfRecord);
+        }
+        try {
+            Messaging.SingleEmailMessage email = createEmail(recordId);
+            email.setSaveAsActivity(false);
+            Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+            return UserInfo.getUserEmail();
+        } catch (Exception ex){
+            throw new IllegalArgumentException(ex.getMessage());
+        }
+    }
 
-        String subject = email.getSubject();
-        String body = email.getHtmlBody();
-        email.setTargetObjectId(UserInfo.getUserId());
-        email.setSubject(subject);
-        email.setHtmlBody(body);
-        email.saveAsActivity = false;
+    private static Messaging.SingleEmailMessage createEmail(Id recordId){
+        EmailTemplate emailTemplate = [SELECT Id,
+                                          Name
+                                      FROM EmailTemplate
+                                      WHERE Name = :getEmailTemplateName()
+                                      LIMIT 1];
+        if (emailTemplate == null){
+            throw new IllegalArgumentException(Label.EmailTemplateIsNotFind);
+        }
+        try {
+            return Messaging.renderStoredEmailTemplate(emailTemplate.Id, UserInfo.getUserId(), recordId);
+        } catch (Exception ex){
+            throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
+        }
+    }
 
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
-        return UserInfo.getUserEmail();
+    private static String getEmailTemplateName(){
+        try {
+            return Settings__mdt.getInstance('Order_Email_Template').Name__c;
+        } catch (Exception ex){
+            throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
+        }
     }
 }

@@ -14,10 +14,10 @@ public class TestDataFactory{
         List<Order__c> orders = new List<Order__c>();
         Integer num = 1;
         for (Account acc : [SELECT Id,
-                                    Name
-                                    FROM Account
-                                    WHERE Name LIKE 'Test Account %'
-                                    LIMIT 49999]){
+                                Name
+                            FROM Account
+                            WHERE Name LIKE 'Test Account %'
+                            LIMIT 49999]){
 			for (Integer i = 1; i <= numOrders; i++){
                 Order__c order = new Order__c(
                     Name = 'Test Order Number: ' + num,

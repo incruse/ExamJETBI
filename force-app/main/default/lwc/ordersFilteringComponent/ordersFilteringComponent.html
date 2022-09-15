@@ -2,10 +2,18 @@
     <lightning-card>
         <lightning-layout>
             <lightning-layout-item size="12">
-                <c-filtering-actions onaccountselected={getAccountFilter} onmonthselected={getMonthFilter}>
-                </c-filtering-actions>
-                <c-orders-result tittle="Orders:" records={records}>
-                </c-orders-result>
+                <c-filtering-actions onaccountselected={getAccountFilter} onmonthselected={getMonthFilter}></c-filtering-actions>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <lightning-layout >
+            <lightning-layout-item >
+                <div if:true={isLoaded}>
+                    <lightning-spinner
+                        alternative-text={labelLoading} variant="brand" size="medium">
+                    </lightning-spinner>
+                </div>
+                <c-orders-result title={title} records={records}></c-orders-result>
             </lightning-layout-item>
         </lightning-layout>
     </lightning-card>

@@ -1,4 +1,4 @@
-public with sharing class filteringActionsController {
+public with sharing class FilteringActionsController {
     private static Map<String, String> noneOptions = new Map<String, String>{
             'label' => Label.None,
             'value' => Label.None
@@ -9,19 +9,19 @@ public with sharing class filteringActionsController {
         try {
             return fetchAccounts();
         } catch (Exception ex){
-            throw new IllegalArgumentException('Error :' + ex.getMessage());
+            throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
         }
     }
 
     @AuraEnabled(Cacheable=true)
     public static List<Map<String, String>> getMonthOptions(String selectedAccount){
         if (String.isBlank(selectedAccount)){
-            throw new IllegalArgumentException('Missing select Account Id in getMonthOptions method.');
+            throw new IllegalArgumentException(Label.MissingSelectAccountIdInGetMonthOptionsMethod);
         }
         try {
             return fetchMonth(selectedAccount);
         } catch (Exception ex){
-            throw new IllegalArgumentException('Error: ' + ex.getMessage());
+            throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
         }
     }
 
@@ -35,7 +35,7 @@ public with sharing class filteringActionsController {
                                   ORDER BY Name ASC
                                   LIMIT 49999];
         if(accounts.isEmpty()){
-             throw new IllegalArgumentException('No Accounts with related Orders!');
+             throw new IllegalArgumentException(Label.NoAccountsWithRelatedOrders);
         }
         for (Account acc : accounts){
             Map<String, String> values = new Map<String, String>();
@@ -58,8 +58,8 @@ public with sharing class filteringActionsController {
         query += ' GROUP BY Id, Name, Payment_Due_Date__c, Account__c';
         query += ' ORDER BY CALENDAR_MONTH(Payment_Due_Date__c) ASC';
         AggregateResult[] queryResult = Database.query(query);
-        if (queryResult.isEmpty()){
-            throw new IllegalArgumentException('No orders matches');
+        if(queryResult.isEmpty()){
+            throw new IllegalArgumentException(Label.NoOrdersMatches);
         }
         for (AggregateResult arg : queryResult){
             Map<String, String> month = new Map<String, String>();
