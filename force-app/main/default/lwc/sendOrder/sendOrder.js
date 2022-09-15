@@ -15,7 +15,7 @@ export default class SendOrder extends LightningElement {
         sendEmail({recordId: this.recordId})
             .then(result => {
                 this.month = result;
-                this.showToast(labelSuccess + '!', labelTextTheRecord + labelTextSuccessfullySent + result, 'success');
+                this.showToast(labelSuccess + '! ', labelTextTheRecord + ' ' + labelTextSuccessfullySent + ' ' +result, 'success');
             })
             .catch(error => {
                 this.showToast(labelError + ': ', error, 'error');
