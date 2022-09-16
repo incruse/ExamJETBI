@@ -11,7 +11,7 @@ public with sharing class OrdersResultController {
     }
 
     private static List<Order__c> fetchOrders (String selectedAccount, String selectedMonth){
-        String query = 'SELECT Id, Name, Payment_Due_Date__c, Account__c, Total_Amount__c FROM Order__c';
+        String query = 'SELECT Id, Name, Payment_Due_Date__c, Account__c, Account__r.Name, Total_Amount__c FROM Order__c';
         if (String.isNotBlank(selectedAccount)){
             query += ' WHERE Account__c = :selectedAccount';
         }

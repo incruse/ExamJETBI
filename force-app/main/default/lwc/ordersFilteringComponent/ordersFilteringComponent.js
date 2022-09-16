@@ -17,6 +17,8 @@ export default class OrdersFilteringComponent extends LightningElement {
         if (result && result?.data){
             this.records = JSON.parse(JSON.stringify(result.data));
             this.records.forEach(item => item['Order Name'] = '/' + item['Id']);
+            this.records.forEach(item => item['Account Name'] = item['Account__r'].Name);
+            this.records.forEach(item => item['AccountURL'] = '/' + item['Account__c']);
             this.isLoaded = false;
         } else if (error) {
             this.showToast(labelError + '! ', error, 'error');
