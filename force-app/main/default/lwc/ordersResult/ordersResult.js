@@ -6,7 +6,7 @@ import paymentDueDateLabel from '@salesforce/label/c.PaymentDueDate';
 
 const columns = [
     { label: nameLabel, fieldName: 'Order Name', sortable: "true" , type: 'url' ,typeAttributes: {label: { fieldName: 'Name' }}},
-    { label: accountLabel, fieldName: 'Account__c', sortable: "true"},
+    { label: accountLabel, fieldName: 'AccountURL', sortable: "true", type: 'url' ,typeAttributes: {label: { fieldName: 'Account Name' }}},
     { label: totalAmountLabel, fieldName: 'Total_Amount__c', type: 'number', sortable: "true"},
     { label: paymentDueDateLabel, fieldName: 'Payment_Due_Date__c', type: 'Date', sortable: "true" }
 ];
