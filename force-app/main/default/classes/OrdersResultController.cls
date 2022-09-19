@@ -1,13 +1,11 @@
 public with sharing class OrdersResultController {
     @AuraEnabled(Cacheable=true)
     public static List<Order__c> getOrders(String selectedAccount, String selectedMonth){
-        List<Order__c> result = new List<Order__c>();
-        try {
-            result = fetchOrders(selectedAccount, selectedMonth);
+        try{
+            return fetchOrders(selectedAccount, selectedMonth);
         } catch (Exception ex){
             throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
         }
-        return result;
     }
 
     private static List<Order__c> fetchOrders (String selectedAccount, String selectedMonth){

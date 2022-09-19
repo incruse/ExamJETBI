@@ -45,16 +45,4 @@
 
         System.assertEquals(orders.size(), OrdersResultController.getOrders( acc, String.valueOf(month)).size(), 'Must be equals records from Order.');
     }
-
-    @IsTest
-    static void getOrdersNegativeTest(){ // доделать
-        try {
-            delete [SELECT Id FROM Account];
-            delete [SELECT Id FROM Order__c];
-            Id acc = TestDataFactory.createOrder(1).get(0).Id;
-        } catch (Exception ex){
-            System.assertEquals('List index out of bounds: 0', ex.getMessage());
-        }
-
-    }
 }

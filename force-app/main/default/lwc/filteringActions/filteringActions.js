@@ -23,7 +23,7 @@ export default class ComboboxBasic extends LightningElement {
     };
     @wire(getAccountOptions)
     wiredAccounts({error, data}){
-        if(data) {
+        if(data){
 			this.accounts = data;
 		} else if(error?.body?.message){
 			this.accounts = [];
@@ -33,28 +33,27 @@ export default class ComboboxBasic extends LightningElement {
 
     filterByAccount(event){
         this.selectedAccount = event.detail.value;
-        if (this.selectedAccount == noneLabel){
+        if (event.detail.value == noneLabel){
             this.selectedAccount = '';
             this.selectedMonth = '';
-            this.month = '';
+            this.month = [];
         }
         this.eventDispatcher('accountselected', this.selectedAccount);
-
-        if (this.selectedAccount){
+        if(this.selectedAccount){
             getMonthOptions({ selectedAccount: event.detail.value })
                 .then(result => {
                     this.month = result;
                 })
                 .catch(error => {
-                    this.showToast(labelError + '! ', error, 'error');
+                    this.showToast(labelError + '! ', error.body.message, 'error');
                 });
-        }
         this.eventDispatcher('monthselected', this.selectedMonth);
+        }
     }
 
     filterByMonth(event){
         this.selectedMonth = event.detail.value;
-            if (this.selectedMonth == '--None--'){
+            if (this.selectedMonth == noneLabel){
             this.selectedMonth = '';
             }
         this.eventDispatcher('monthselected', this.selectedMonth);
