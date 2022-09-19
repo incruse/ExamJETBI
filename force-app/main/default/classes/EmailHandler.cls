@@ -15,26 +15,22 @@ public with sharing class EmailHandler {
     }
 
     private static Messaging.SingleEmailMessage createEmail(Id recordId){
-        EmailTemplate emailTemplate = [SELECT Id,
-                                          Name
-                                      FROM EmailTemplate
-                                      WHERE Name = :getEmailTemplateName()
-                                      LIMIT 1];
-        if (emailTemplate == null){
-            throw new IllegalArgumentException(Label.EmailTemplateIsNotFind);
-        }
         try {
-            return Messaging.renderStoredEmailTemplate(emailTemplate.Id, UserInfo.getUserId(), recordId);
+            return Messaging.renderStoredEmailTemplate(getEmailTemplate().Id, UserInfo.getUserId(), recordId);
         } catch (Exception ex){
             throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
         }
     }
 
-    private static String getEmailTemplateName(){
+    private static EmailTemplate getEmailTemplate(){
         try {
-            return Settings__mdt.getInstance('Order_Email_Template').Name__c;
+            return [SELECT Id,
+                        Name
+                    FROM EmailTemplate
+                    WHERE Name = :Settings__mdt.getInstance('Order_Email_Template').Name__c
+                    LIMIT 1];
         } catch (Exception ex){
-            throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
+            throw new IllegalArgumentException(Label.EmailTemplateIsNotFind);
         }
     }
 }

@@ -6,7 +6,7 @@ public with sharing class FilteringActionsController {
 
     @AuraEnabled(Cacheable=true)
     public static List<Map<String, String>> getAccountOptions(){
-        try {
+        try{
             return fetchAccounts();
         } catch (Exception ex){
             throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
@@ -18,7 +18,7 @@ public with sharing class FilteringActionsController {
         if (String.isBlank(selectedAccount)){
             throw new IllegalArgumentException(Label.MissingSelectAccountIdInGetMonthOptionsMethod);
         }
-        try {
+        try{
             return fetchMonth(selectedAccount);
         } catch (Exception ex){
             throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());

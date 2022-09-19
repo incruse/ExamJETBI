@@ -20,19 +20,25 @@ export default class OrdersFilteringComponent extends LightningElement {
             this.records.forEach(item => item['Account Name'] = item['Account__r'].Name);
             this.records.forEach(item => item['AccountURL'] = '/' + item['Account__c']);
             this.isLoaded = false;
-        } else if (error) {
+        } else if (error){
             this.showToast(labelError + '! ', error, 'error');
             this.records = [];
         }
     }
 
     getAccountFilter(event){
-        this.isLoaded = true;
+        if(event.detail == ''){
+            this.isLoaded = true;
+            this.selectedAccount = null;
+        }
         this.selectedAccount = event.detail;
     }
 
     getMonthFilter(event){
-        this.isLoaded = true;
+        if(event.detail == ''){
+            this.isLoaded = true;
+            this.selectedMonth = null;
+        }
         this.selectedMonth = event.detail;
     }
 
