@@ -24,10 +24,16 @@
     static void sendEmailWithInvalidEmailTemplateNameNegative(){
         TestDataFactory.createAccounts(1);
         Order__c ord = TestDataFactory.createOrder(1).get(0);
-        delete [SELECT Id,
-                    Name
-                FROM EmailTemplate
-                WHERE Name = 'Order Details'];
+
+        User user = [SELECT Id
+                     FROM User
+                     WHERE Id = :UserInfo.getUserId()];
+        System.runAs(user){
+            delete [SELECT Id,
+                        Name
+                    FROM EmailTemplate
+                    WHERE Name = 'Order Details'];
+        }
         try{
             EmailHandler.sendEmail(ord.Id);
             System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should be sent');
