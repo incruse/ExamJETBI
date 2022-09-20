@@ -1,5 +1,5 @@
-##Exam Task for Salesforce Courses JETBI - Autumn 2022
-###Task name: 
+## Exam Task for Salesforce Courses JETBI - Autumn 2022
+### Task name: 
 Order Automation (Bid4Good) 
 
 **Table content:**
@@ -9,10 +9,10 @@ Order Automation (Bid4Good)
 * [Setup](#setup)
 * [Usage](#usage)
 
-###General Information
+### General Information
 I needed to create an application that filters entries in a certain object based on two related criteria. In addition to the application, I needed to automate the sending of an email directly from the record interface.
 
-###Technologies Used
+### Technologies Used
 * Custom Object configuration with relationships.
 * SOQL queries (dynamic/static)
 * Permission set
@@ -22,6 +22,6 @@ I needed to create an application that filters entries in a certain object based
 * Quick Action
 * Custom Labels
 
-###Screenshots
+### Screenshots
 ![How it work](./img/Presentation__AdobeExpress.gif)
 
