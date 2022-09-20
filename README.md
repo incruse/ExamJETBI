@@ -25,9 +25,13 @@ I needed to create an application that filters entries in a certain object based
 
 ### Screenshots
 ![How it work](./img/Presentation__AdobeExpress.gif)
+> How it works.
 ![App page](./img/App%20Page.jpg)
+> Application home page.
 ![Record page](./img/Record%20Page.jpg)
+> Record page of Order.
 ![Email example](./img/Email%20example.jpg)
+> Email example.
 
 
 ## Setup
