@@ -49,9 +49,9 @@ Project was made in with DX structure. So, for installing it into your Salesforc
 In Bid4Good application you can see table with Orders records and two picklists for filtering it.
 The column on the table are sortable, so you can sorting by fild if you need.
 In first picklist (left) by default are only Account they have at least one related Order or more.
-If you want filtering Orders table by Account - choose Account in first picklist.
+- If you want filtering Orders table by Account - choose Account in first picklist.
 By default the second picklist do not have options. Options in this picklist will be dynamicly added after you choise Account in first picklist.
-If you select the --None-- option, filtering on the table will be reset.
+- If you select the --None-- option, filtering on the table will be reset.
 Orders and Accounts result on the table are clickable, if you want go to some record you can click on it to go.
 
 #### Record Page
