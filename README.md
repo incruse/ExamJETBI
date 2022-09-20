@@ -24,14 +24,15 @@ I needed to create an application that filters entries in a certain object based
 * Custom Labels
 
 ### Screenshots
-![How it work](./img/Presentation__AdobeExpress.gif)
 > How it works.
-![App page](./img/App%20Page.jpg)
+![How it work (./img/Presentation__AdobeExpress.gif)](./img/Presentation__AdobeExpress.gif)
 > Application home page.
-![Record page](./img/Record%20Page.jpg)
+![App page(./img/App%20Page.jpg)](./img/App%20Page.jpg)
 > Record page of Order.
-![Email example](./img/Email%20example.jpg)
+![Record page(./img/Record%20Page.jpg)](./img/Record%20Page.jpg)
 > Email example.
+![Email example(./img/Email%20example.jpg)](./img/Email%20example.jpg)
+
 
 
 ## Setup
