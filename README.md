@@ -25,13 +25,13 @@ I needed to create an application that filters entries in a certain object based
 
 ### Screenshots
 How it works.
-![How it work (./img/Presentation__AdobeExpress.gif)](./img/Presentation__AdobeExpress.gif)
+![How it work](./img/Presentation__AdobeExpress.gif)
 Application home page.
-![App page(./img/App%20Page.jpg)]
+![App page](./img/App%20Page.jpg)
 Record page of Order.
-![](./img/Record%20Page.jpg)
+![Record page](./img/Record%20Page.jpg)
 Email example.
-![Email example(./img/Email%20example.jpg)](./img/Email%20example.jpg)
+![Email example](./img/Email%20example.jpg)
 
 
 
