@@ -13,36 +13,36 @@ export default class OrdersFilteringComponent extends LightningElement {
     isLoaded = false;
     title = title;
 
-    @wire(getOrders, {selectedAccount: '$selectedAccount', selectedMonth: '$selectedMonth'}) waredOrders(result, error){
-        if (result && result?.data){
+    @wire(getOrders, {selectedAccount: '$selectedAccount', selectedMonth: '$selectedMonth'}) waredOrders(result, error) {
+        if (result && result?.data) {
             this.records = JSON.parse(JSON.stringify(result.data));
             this.records.forEach(item => item['Order Name'] = '/' + item['Id']);
             this.records.forEach(item => item['Account Name'] = item['Account__r'].Name);
             this.records.forEach(item => item['AccountURL'] = '/' + item['Account__c']);
             this.isLoaded = false;
-        } else if (error){
+        } else if (error) {
             this.showToast(labelError + '! ', error, 'error');
             this.records = [];
         }
     }
 
-    getAccountFilter(event){
-        if(event.detail == ''){
+    getAccountFilter(event) {
+        if (event.detail == '') {
             this.isLoaded = true;
             this.selectedAccount = null;
         }
         this.selectedAccount = event.detail;
     }
 
-    getMonthFilter(event){
-        if(event.detail == ''){
+    getMonthFilter(event) {
+        if (event.detail == '') {
             this.isLoaded = true;
             this.selectedMonth = null;
         }
         this.selectedMonth = event.detail;
     }
 
-    showToast(title, message, variant){
+    showToast(title, message, variant) {
         const event = new ShowToastEvent({
             title: title,
             message: message,

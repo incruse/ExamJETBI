@@ -1,13 +1,13 @@
 @IsTest
-private class RandomDataCreatorTest{
+private class RandomDataCreatorTest {
     @TestSetup
-    static void setup(){
+    static void setup() {
         TestDataFactory.createAccounts(5);
         TestDataFactory.createOrder(8);
     }
 
     @IsTest
-    static void createAccountsTest(){
+    static void createAccountsTest() {
         RandomDataCreator.createAccounts();
         List<Account> result = [SELECT Id,
                                     Name
@@ -17,7 +17,7 @@ private class RandomDataCreatorTest{
     }
 
     @IsTest
-    static void createOrdersTest(){
+    static void createOrdersTest() {
         RandomDataCreator.createOrders();
         List<Order__c> result = [SELECT Id,
                                     Name,

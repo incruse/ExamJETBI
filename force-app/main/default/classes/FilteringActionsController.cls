@@ -5,27 +5,27 @@ public with sharing class FilteringActionsController {
     };
 
     @AuraEnabled(Cacheable=true)
-    public static List<Map<String, String>> getAccountOptions(){
-        try{
+    public static List<Map<String, String>> getAccountOptions() {
+        try {
             return fetchAccounts();
-        } catch (Exception ex){
+        } catch (Exception ex) {
             throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
         }
     }
 
     @AuraEnabled(Cacheable=true)
-    public static List<Map<String, String>> getMonthOptions(String selectedAccount){
-        if (String.isBlank(selectedAccount)){
+    public static List<Map<String, String>> getMonthOptions(String selectedAccount) {
+        if (String.isBlank(selectedAccount)) {
             throw new IllegalArgumentException(Label.MissingSelectAccountIdInGetMonthOptionsMethod);
         }
-        try{
+        try {
             return fetchMonth(selectedAccount);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
         }
     }
 
-    private static List<Map<String, String>> fetchAccounts(){
+    private static List<Map<String, String>> fetchAccounts() {
         List<Map<String, String>> result = new List<Map<String, String>>();
         List<Account> accounts = [SELECT Id,
                                       Name,
@@ -34,10 +34,10 @@ public with sharing class FilteringActionsController {
                                   WHERE Id IN (SELECT Account__c FROM Order__c)
                                   ORDER BY Name ASC
                                   LIMIT 49999];
-        if(accounts.isEmpty()){
+        if(accounts.isEmpty()) {
              throw new IllegalArgumentException(Label.NoAccountsWithRelatedOrders);
         }
-        for (Account acc : accounts){
+        for (Account acc : accounts) {
             Map<String, String> values = new Map<String, String>();
             values.put('label' , acc.Name);
             values.put('value', String.valueOf(acc.Id));
@@ -47,21 +47,21 @@ public with sharing class FilteringActionsController {
         return result;
     }
 
-    private static List<Map<String, String>> fetchMonth(String selectedAccount){
+    private static List<Map<String, String>> fetchMonth(String selectedAccount) {
         List<Map<String, String>> result = new List<Map<String, String>>();
         Set<Map<String, String>> monthOptions = new Set<Map<String, String>>();
         String query = 'SELECT Id, Name, Payment_Due_Date__c, Account__c';
         query += ' FROM Order__c';
-        if(String.isNotBlank(selectedAccount)){
+        if (String.isNotBlank(selectedAccount)) {
             query += ' WHERE Account__c = :selectedAccount';
         }
         query += ' GROUP BY Id, Name, Payment_Due_Date__c, Account__c';
         query += ' ORDER BY CALENDAR_MONTH(Payment_Due_Date__c) ASC';
         AggregateResult[] queryResult = Database.query(query);
-        if(queryResult.isEmpty()){
+        if (queryResult.isEmpty()) {
             throw new IllegalArgumentException(Label.NoOrdersMatches);
         }
-        for (AggregateResult arg : queryResult){
+        for (AggregateResult arg : queryResult) {
             Map<String, String> month = new Map<String, String>();
             Date ddt = Date.valueOf(arg.get('Payment_Due_Date__c'));
             String monthName = Datetime.newInstance(ddt.year(), ddt.month(), ddt.day()).format('MMMMM');

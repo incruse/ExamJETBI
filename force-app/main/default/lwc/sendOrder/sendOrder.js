@@ -11,18 +11,18 @@ import labelTextSuccessfullySent from '@salesforce/label/c.successfullySent';
 export default class SendOrder extends LightningElement {
     @track email = '';
     @api recordId;
-    @api invoke(){
+    @api invoke() {
         sendEmail({recordId: this.recordId})
             .then(result => {
                 this.month = result;
-                this.showToast(labelSuccess + '! ', labelTextTheRecord + ' ' + labelTextSuccessfullySent + ' ' +result, 'success');
+                this.showToast(labelSuccess + '! ', labelTextTheRecord + ' ' + labelTextSuccessfullySent + ' ' + result, 'success');
             })
             .catch(error => {
                 this.showToast(labelError + ': ', error, 'error');
             });
     }
 
-    showToast(tittle, message, variant){
+    showToast(tittle, message, variant) {
         const event = new ShowToastEvent({
             title: tittle,
             message: message,
