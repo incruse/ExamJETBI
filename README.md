@@ -31,7 +31,7 @@ I needed to create an application that filters entries in a certain object based
 ##### Record page of Order.
 ![Record page](./img/Record%20Page.jpg)
 ##### Email example.
-![Email example](./img/Email%20example.jpg)
+![Email example](./img/Email%20Template.jpg)
 
 
 
