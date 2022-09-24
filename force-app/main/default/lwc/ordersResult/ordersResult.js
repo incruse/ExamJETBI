@@ -19,23 +19,23 @@ export default class DataTableSortingLWC extends LightningElement {
     @track sortDirection;
 
     @api
-    get records(){
+    get records() {
         return this._records;
     }
-    set records(value){
-        if (!value){
+    set records(value) {
+        if (!value) {
             return;
         }
         this._records = JSON.parse(JSON.stringify(value));
     }
 
-    doSorting(event){
+    doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
         this.sortData(this.sortBy, this.sortDirection);
     }
 
-    sortData(fieldName, direction){
+    sortData(fieldName, direction) {
         let parseData = JSON.parse(JSON.stringify(this._records));
         let keyValue = (a) => {
             return a[fieldName];

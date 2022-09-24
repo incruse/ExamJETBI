@@ -1,4 +1,4 @@
-import {LightningElement , wire} from 'lwc';
+import { LightningElement , wire } from 'lwc';
 import getAccountOptions from '@salesforce/apex/FilteringActionsController.getAccountOptions';
 import getMonthOptions from '@salesforce/apex/FilteringActionsController.getMonthOptions';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -22,24 +22,24 @@ export default class ComboboxBasic extends LightningElement {
         monthPicklistPlaceholder : placeholderMonthPicklist
     };
     @wire(getAccountOptions)
-    wiredAccounts({error, data}){
-        if(data){
+    wiredAccounts({error, data}) {
+        if (data) {
 			this.accounts = data;
-		} else if(error?.body?.message){
+		} else if (error?.body?.message) {
 			this.accounts = [];
             this.showToast(labelError, error.body.message, 'error');
 		}
 	};
 
-    filterByAccount(event){
+    filterByAccount(event) {
         this.selectedAccount = event.detail.value;
-        if (event.detail.value == noneLabel){
+        if (event.detail.value == noneLabel) {
             this.selectedAccount = '';
             this.selectedMonth = '';
             this.month = [];
         }
         this.eventDispatcher('accountselected', this.selectedAccount);
-        if(this.selectedAccount){
+        if (this.selectedAccount) {
             getMonthOptions({ selectedAccount: event.detail.value })
                 .then(result => {
                     this.month = result;
@@ -51,15 +51,15 @@ export default class ComboboxBasic extends LightningElement {
         }
     }
 
-    filterByMonth(event){
+    filterByMonth(event) {
         this.selectedMonth = event.detail.value;
-            if (this.selectedMonth == noneLabel){
+            if (this.selectedMonth == noneLabel) {
             this.selectedMonth = '';
             }
         this.eventDispatcher('monthselected', this.selectedMonth);
     }
 
-     showToast(tittle, message, variant){
+     showToast(tittle, message, variant) {
          const event = new ShowToastEvent({
              title: tittle,
              message: message,
@@ -68,7 +68,7 @@ export default class ComboboxBasic extends LightningElement {
          this.dispatchEvent(event);
      }
 
-     eventDispatcher(nameEvent, eventDetail){
+     eventDispatcher(nameEvent, eventDetail) {
          this.dispatchEvent(new CustomEvent(nameEvent, {detail: eventDetail}));
      }
 }

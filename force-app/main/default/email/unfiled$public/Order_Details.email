@@ -1,23 +1,62 @@
-<html style="overflow-y: hidden;">
-	<body style="height: auto ; min-height: auto">
-		<div>
-			<div>
-				<img alt="JetBI" src="https://jetbi-2e-dev-ed.file.force.com/file-asset-public/JeTLogo?oid=00D7Q000008Mo1J" style="max-width: 697.3px; width: 697.297px; height: 86.5312px;" title="JetBILogo" />&nbsp;
+<html>
+<head>
+	<title></title>
+</head>
+<body style="height: auto;
+			 width: auto;">&nbsp;
+	<div>
+		<div style="background: #DCDCDC;
+					border-radius: 5px;
+					height: 200px;
+					margin: 2%;">
+			<div style="display: inline-block;">
+				<img alt="LOGO JeTBI"
+					 src="https://jetbi-2e-dev-ed.file.force.com/file-asset-public/LOGO_JeTBI?oid=00D7Q000008Mo1J"
+					 style="height: 180px;
+							margin: 2%;
+							pointer-events: none;"
+					 title="LOGO JeTBI" />
 			</div>
-		<div style="text-align: center;">
-			<span style="font-size:22px;">
-				<strong>Order detail:</strong>
-			</span>
+			&nbsp;
+			<div style="position: absolute;
+						display: inline-block;
+						margin: 2%;">
+
+			</div>
 		</div>
-			<hr />
-			<span style="font-size:20px;">
-				<span style="font-family:Book Antiqua,Times New Roman,Times,serif;">
-					<strong>Order:</strong> {!Order__c.Name}.<br />
-					<strong>Customer: {!Order__c.Account__c}</strong>.<br />
-					<strong>Total Amount:</strong> {!Order__c.Total_Amount__c} $.<br />
-					<strong>Payment Due Date:</strong> {!Order__c.Payment_Due_Date__c}.
+	</div>
+
+
+	<div style="background: #DCDCDC;
+				border-radius: 5px;
+				margin: 2%;
+				height: 80px;">
+		<div style="text-align: center;
+					height: 80px;
+					line-height: 80px;">
+				<span style="font-family: Arial Black,Arial,Helvetica,sans-serif;
+							 font-size: 36px;">
+					<strong>ORDER DETAILS:</strong>
 				</span>
-			</span>
 		</div>
-	</body>
+	</div>
+
+	<div style="height: auto;">
+		<div style="background: #DCDCDC;
+					display: flow-root;
+					border-radius: 5px;
+					margin: 2%;
+					height: auto;">
+			<div style="margin: 2%;">
+					<span style="font-family:Arial,Helvetica,sans-serif;
+								 font-size: 24px;">
+						<strong>Order:</strong> {!Order__c.Name}.<br /><hr />
+						<strong>Customer: {!Order__c.Account__c}</strong>.<br /><hr />
+						<strong>Total Amount:</strong> {!Order__c.Total_Amount__c}$.<br /><hr />
+						<strong>Payment Due Date:</strong> {!Order__c.Payment_Due_Date__c}.<hr />
+						</span>
+			</div>
+		</div>
+	</div>
+</body>
 </html>
