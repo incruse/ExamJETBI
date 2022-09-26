@@ -1,14 +1,48 @@
 <template>
     <lightning-layout>
-        <lightning-layout-item size="6" padding="around-small">
-            <lightning-combobox
-                name="account"
-                label={labels.labelAccount}
-                value={selectedAccount}
-                placeholder={labels.accountPicklistPlaceholder}
-                options={accounts}
-                onchange={filterByAccount}>
-            </lightning-combobox>
+        <lightning-layout-item padding="around-small" size="6">
+            <div class="slds-form-element slds-combobox_container slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
+                 id="accountOptionDiv"
+                 aria-expanded="true">
+                <label class="slds-form-element__label"
+                       for="accountPicklist">{labels.labelAccount}</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                    <lightning-icon size="x-small"
+                                    class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"
+                                    icon-name="utility:down">
+                    </lightning-icon>
+                    <input type="text"
+                           id="accountPicklist"
+                           value={selectedAccount}
+                           onclick={optionVisibilitySwitch}
+                           onblur={optionVisibilitySwitch}
+                           placeholder={labels.accountPicklistPlaceholder}
+                           class="slds-input"/>
+                </div>
+                <div class="slds-dropdown slds-dropdown_length-3 slds-dropdown_fluid slds-dropdown_left slds-hidden dropdown"
+                     role="listbox">
+                    <ul class="slds-listbox slds-listbox_vertical"
+                        role="presentation">
+                        <template for:each={accounts} for:item="acc">
+                            <li key={acc}
+                                class="slds-listbox__item"
+                                data-label={acc.label}
+                                data-value={acc.value}
+                                role="presentation"
+                                onclick={filterByAccount}>
+                                <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                     role="option">
+                                    <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                        <span class="slds-truncate">
+                                            {acc.label}
+                                        </span>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+
         </lightning-layout-item>
 
         <lightning-layout-item size="6" padding="around-small">
