@@ -15,6 +15,7 @@ export default class ComboboxBasic extends LightningElement {
     selectedMonth = '';
     accounts;
     month;
+    isValueSelected = false;
     labels = {
         labelAccount : labelAccount,
         labelMonth : labelMonth,
@@ -31,25 +32,27 @@ export default class ComboboxBasic extends LightningElement {
 		}
 	};
 
-    filterByAccount(event) {
-        this.selectedAccount = event.detail.value;
-        if (event.detail.value == noneLabel) {
-            this.selectedAccount = '';
-            this.selectedMonth = '';
-            this.month = [];
-        }
-        this.eventDispatcher('accountselected', this.selectedAccount);
-        if (this.selectedAccount) {
-            getMonthOptions({ selectedAccount: event.detail.value })
-                .then(result => {
-                    this.month = result;
-                })
-                .catch(error => {
-                    this.showToast(labelError + '! ', error.body.message, 'error');
-                });
-        this.eventDispatcher('monthselected', this.selectedMonth);
-        }
-    }
+     filterByAccount(event) {
+         this.selectedAccount = event.currentTarget.dataset.label;
+         let account = event.currentTarget.dataset.value;
+             if (this.selectedAccount == noneLabel) {
+                 this.selectedAccount = '';
+                 this.selectedMonth = '';
+                 this.month = [];
+                 account = '';
+             }
+             this.eventDispatcher('accountselected', account);
+             if (this.selectedAccount) {
+                 getMonthOptions({ selectedAccount: account})
+                     .then(result => {
+                         this.month = result;
+                     })
+                     .catch(error => {
+                         this.showToast(labelError + '! ', error.body.message, 'error');
+                     });
+             this.eventDispatcher('monthselected', this.selectedMonth);
+             }
+     }
 
     filterByMonth(event) {
         this.selectedMonth = event.detail.value;
@@ -70,5 +73,15 @@ export default class ComboboxBasic extends LightningElement {
 
      eventDispatcher(nameEvent, eventDetail) {
          this.dispatchEvent(new CustomEvent(nameEvent, {detail: eventDetail}));
+     }
+
+     optionVisibilitySwitch() {
+         if (!this.isValueSelected) {
+            this.template.querySelector('.dropdown').classList.remove('slds-hidden');
+            this.isValueSelected = true;
+         } else {
+            this.template.querySelector('.dropdown').classList.add('slds-hidden');
+            this.isValueSelected = false;
+         }
      }
 }
