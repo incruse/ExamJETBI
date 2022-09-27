@@ -50,13 +50,6 @@
         <value>Name</value>
     </labels>
     <labels>
-        <fullName>NoAccountsWithRelatedOrders</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>No Accounts with related Orders!</shortDescription>
-        <value>No Accounts with related Orders!</value>
-    </labels>
-    <labels>
         <fullName>NoMatchIdOfRecord</fullName>
         <language>en_US</language>
         <protected>true</protected>

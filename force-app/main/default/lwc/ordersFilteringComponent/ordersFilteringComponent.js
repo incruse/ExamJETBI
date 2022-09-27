@@ -9,20 +9,26 @@ export default class OrdersFilteringComponent extends LightningElement {
     labelLoading = this.labelLoading;
     selectedAccount = '';
     selectedMonth = '';
+    searchOrderBy = '';
+    searchByFieldValue = '';
     @track records = [];
+    recordsData = [];
     isLoaded = false;
     title = title;
 
-    @wire(getOrders, {selectedAccount: '$selectedAccount', selectedMonth: '$selectedMonth'}) waredOrders(result, error) {
+    @wire(getOrders, {selectedAccount: '$selectedAccount',
+                      selectedMonth: '$selectedMonth'}) waredOrders(result, error) {
         if (result && result?.data) {
             this.records = JSON.parse(JSON.stringify(result.data));
             this.records.forEach(item => item['Order Name'] = '/' + item['Id']);
             this.records.forEach(item => item['Account Name'] = item['Account__r'].Name);
             this.records.forEach(item => item['AccountURL'] = '/' + item['Account__c']);
+            this.recordsData = this.records;
             this.isLoaded = false;
         } else if (error) {
             this.showToast(labelError + '! ', error, 'error');
             this.records = [];
+            this.recordsData = this.records;
         }
     }
 
@@ -40,6 +46,22 @@ export default class OrdersFilteringComponent extends LightningElement {
             this.selectedMonth = null;
         }
         this.selectedMonth = event.detail;
+    }
+
+    getFieldNameFilter(event) {
+        let field = event.detail.searchFrom;
+        this.recordsData = this.records;
+        let searchName = event.detail.value;
+        let result = [];
+        if (searchName) {
+            for (let order of JSON.parse(JSON.stringify(this.records))) {
+                let searchFrom = Object.keys(order).filter( el => el == field);
+                if (order[field].toUpperCase().includes(searchName.toUpperCase())) {
+                    result.push(order);
+                }
+            }
+            this.recordsData = result;
+        }
     }
 
     showToast(title, message, variant) {

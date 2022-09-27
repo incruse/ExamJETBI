@@ -2,19 +2,20 @@
     <lightning-layout>
         <lightning-layout-item padding="around-small" size="6">
             <div class="slds-form-element slds-combobox_container slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
-                 id="accountOptionDiv"
                  aria-expanded="true">
                 <label class="slds-form-element__label"
-                       for="accountPicklist">{labels.labelAccount}</label>
+                       for="accountPicklist">{labels.account}</label>
                 <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
                     <lightning-icon size="x-small"
                                     class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"
                                     icon-name="utility:down">
                     </lightning-icon>
                     <input type="text"
+                           autocomplete="off"
                            id="accountPicklist"
                            value={selectedAccount}
                            onclick={optionVisibilitySwitch}
+                           onkeyup={getAccountOptions}
                            onblur={optionVisibilitySwitch}
                            placeholder={labels.accountPicklistPlaceholder}
                            class="slds-input"/>
@@ -23,7 +24,7 @@
                      role="listbox">
                     <ul class="slds-listbox slds-listbox_vertical"
                         role="presentation">
-                        <template for:each={accounts} for:item="acc">
+                        <template for:each={accountsOptions} for:item="acc">
                             <li key={acc}
                                 class="slds-listbox__item"
                                 data-label={acc.label}
@@ -42,18 +43,56 @@
                     </ul>
                 </div>
             </div>
-
         </lightning-layout-item>
 
         <lightning-layout-item size="6" padding="around-small">
             <lightning-combobox
                 name="month"
-                label={labels.labelMonth}
+                label={labels.month}
                 value={selectedMonth}
                 placeholder={labels.monthPicklistPlaceholder}
                 options={month}
                 onchange={filterByMonth}>
             </lightning-combobox>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item size="6">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" padding="around-small">
+                <lightning-combobox
+                    name="ordersFilterBy"
+                    label={labels.filterBy}
+                    value={selectedOrdersFilteringBy}
+                    options={ordersFilterByOptions}
+                    onchange={tableFiltering}>
+                </lightning-combobox>
+        </lightning-layout-item>
+        <lightning-layout-item size="4" padding="around-small">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">{labels.name}</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left-right">
+                    <lightning-icon
+                        size="x-small"
+                        class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"
+                        icon-name="utility:search">
+                    </lightning-icon>
+                    <template if:true={isTypingInSearch}>
+                        <button class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default slds-button"
+                                onclick={resetSearch}>
+                            <lightning-icon
+                                size="x-small"
+                                class="slds-button__icon"
+                                icon-name="utility:close">
+                            </lightning-icon>
+                        </button>
+                    </template>
+                    <input
+                        class="slds-input"
+                        value={searchingName}
+                        onkeyup={searchOrder}/>
+                </div>
+            </div>
         </lightning-layout-item>
     </lightning-layout>
 </template>
