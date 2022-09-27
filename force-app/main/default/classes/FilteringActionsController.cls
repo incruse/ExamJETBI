@@ -27,21 +27,20 @@ public with sharing class FilteringActionsController {
 
     private static List<Map<String, String>> fetchAccounts() {
         List<Map<String, String>> result = new List<Map<String, String>>();
-        List<Account> accounts = [SELECT Id,
-                                      Name,
-                                      (SELECT Id, Payment_Due_Date__c FROM Orders__r)
-                                  FROM Account
-                                  WHERE Id IN (SELECT Account__c FROM Order__c)
-                                  ORDER BY Name ASC
-                                  LIMIT 49999];
-        if(accounts.isEmpty()) {
-             throw new IllegalArgumentException(Label.NoAccountsWithRelatedOrders);
-        }
-        for (Account acc : accounts) {
-            Map<String, String> values = new Map<String, String>();
-            values.put('label' , acc.Name);
-            values.put('value', String.valueOf(acc.Id));
-            result.add(values);
+        String query = 'SELECT Id, Name, (SELECT Id, Payment_Due_Date__c FROM Orders__r)';
+        query += ' FROM Account WHERE Id IN (SELECT Account__c FROM Order__c)';
+        query += ' ORDER BY Name ASC LIMIT 49999';
+        List<Account> accounts = Database.query(query);
+        if (accounts.isEmpty()) {
+            result.add(noneOptions);
+            return result;
+        } else {
+            for (Account acc : accounts) {
+                Map<String, String> values = new Map<String, String>();
+                values.put('label' , acc.Name);
+                values.put('value', String.valueOf(acc.Id));
+                result.add(values);
+            }
         }
         result.add(0, noneOptions);
         return result;
