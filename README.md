@@ -11,7 +11,7 @@ Order Automation (Bid4Good)
 * [Usage](#usage)
 
 ### General Information
-I needed to create an application that filters entries in a certain object based on two related criteria. In addition to the application, I needed to automate the sending of an email directly from the record interface.
+I should have created an application that filters entries in a certain object based on two related criteria. In addition to the application, I had to automate the sending of an email directly from the record interface.
 
 ### Technologies Used
 * Custom Object configuration with relationships.
