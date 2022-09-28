@@ -8,6 +8,13 @@
         <value>Account</value>
     </labels>
     <labels>
+        <fullName>AccountName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Account Name</shortDescription>
+        <value>Account Name</value>
+    </labels>
+    <labels>
         <fullName>EmailTemplateIsNotFind</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -20,6 +27,13 @@
         <protected>true</protected>
         <shortDescription>Error</shortDescription>
         <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>Filter_by</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Filter by:</shortDescription>
+        <value>Filter by:</value>
     </labels>
     <labels>
         <fullName>Loading</fullName>
@@ -71,6 +85,13 @@
         <value>--None--</value>
     </labels>
     <labels>
+        <fullName>OrderName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Order name</shortDescription>
+        <value>Order name</value>
+    </labels>
+    <labels>
         <fullName>Orders</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -120,7 +141,21 @@
         <value>Total Amount</value>
     </labels>
     <labels>
+        <fullName>Total_Amount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Total Amount</shortDescription>
+        <value>Total Amount</value>
+    </labels>
+    <labels>
         <fullName>successfullySent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>successfully sent</shortDescription>
+        <value>successfully sent to</value>
+    </labels>
+    <labels>
+        <fullName>successfully_sent</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>successfully sent</shortDescription>

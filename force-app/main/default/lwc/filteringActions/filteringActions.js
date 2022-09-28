@@ -9,6 +9,10 @@ import labelFilterBy from '@salesforce/label/c.Filter_by';
 import labelMonth from '@salesforce/label/c.Month';
 import labelOrderName from '@salesforce/label/c.OrderName';
 import labelAccountName from '@salesforce/label/c.AccountName';
+import labelTotalAmount from '@salesforce/label/c.totalAmount';
+import labelTo from '@salesforce/label/c.From';
+import labelFrom from '@salesforce/label/c.To';
+import labelPaymentDueDate from '@salesforce/label/c.paymentDueDate';
 import labelError from '@salesforce/label/c.Error';
 import placeholderAccountPicklist from '@salesforce/label/c.PlaceholderAccountOption';
 import placeholderMonthPicklist from '@salesforce/label/c.PlaceholderMonthOption';
@@ -21,13 +25,20 @@ export default class ComboboxBasic extends LightningElement {
     accounts = [];
     accountsOptions = [];
     month;
+    dateFrom = '';
+    dateTo = '';
+    inputType = 'search';
+    isDateInput = false;
     isValueSelected = false;
-    isTypingInSearch = false;
     labels = {
         filterBy : labelFilterBy,
         orderName : labelOrderName,
         accountName : labelAccountName,
+        paymentDueDate : labelPaymentDueDate,
+        totalAmount : labelTotalAmount,
         name : labelName,
+        to : labelTo,
+        from : labelFrom,
         account : labelAccount,
         month : labelMonth,
         accountPicklistPlaceholder : placeholderAccountPicklist,
@@ -35,7 +46,9 @@ export default class ComboboxBasic extends LightningElement {
     };
     ordersFilterByOptions = [
             { label: this.labels.orderName , value: 'Name' },
-            { label: this.labels.accountName, value: 'Account Name' }
+            { label: this.labels.accountName, value: 'Account Name' },
+            { label: this.labels.paymentDueDate, value: 'Payment_Due_Date__c' },
+            { label: this.labels.totalAmount, value: 'Total_Amount__c' }
     ];
     @wire(getAccountOptions)
     wiredAccounts({error, data}) {
@@ -55,10 +68,11 @@ export default class ComboboxBasic extends LightningElement {
         if (this.selectedAccount == noneLabel) {
             this.selectedAccount = '';
             this.selectedMonth = '';
+            this.dateFrom = '';
+            this.dateTo = '';
             this.month = [];
             account = '';
             this.accountsOptions = this.accounts;
-            this.isTypingInSearch = false;
         }
         this.searchingName = '';
         this.eventDispatcher('accountselected', account);
@@ -107,7 +121,10 @@ export default class ComboboxBasic extends LightningElement {
 
     tableFiltering(event) {
         this.selectedOrdersFilteringBy = event.detail.value;
-        this.selectedOrdersFilteringBy == '' ? this.disabledInput = true : this.disabledInput = false;
+        this.searchingName = '';
+        this.dateFrom = '';
+        this.dateTo = '';
+        this.switchInputType(this.selectedOrdersFilteringBy);
         this.eventDispatcher('searchorder', {
             searchFrom: this.selectedOrdersFilteringBy,
             value: this.searchingName
@@ -116,23 +133,30 @@ export default class ComboboxBasic extends LightningElement {
 
     searchOrder(event) {
         this.searchingName = event.target.value;
-        this.searchingName == '' ? this.isTypingInSearch = false : this.isTypingInSearch = true;
         this.eventDispatcher('searchorder', {
             searchFrom: this.selectedOrdersFilteringBy,
             value: this.searchingName
         } );
     }
 
+    datePicker(event) {
+        event.target.name == 'Date From' ? this.dateFrom = event.target.value : this.dateTo = event.target.value;
+        this.eventDispatcher('searchorder', {
+            searchFrom: this.selectedOrdersFilteringBy,
+            dateFrom: this.dateFrom,
+            dateTo: this.dateTo
+        } );
+    }
+
     getAccountOptions(event) {
-        let accountName = event.target.value;
         this.accountsOptions = this.accounts;
-        this.selectedAccount = accountName;
+        this.selectedAccount = event.target.value;
         let accounts = JSON.parse(JSON.stringify(this.accountsOptions));
         let result = [];
-        if (accountName) {
+        if (this.selectedAccount) {
             for (let acc of accounts) {
                 let searchFrom = Object.keys(acc).filter( el => el == 'label');
-                if (acc.label.toUpperCase().includes(accountName.toUpperCase())) {
+                if (acc.label.toUpperCase().includes(this.selectedAccount.toUpperCase())) {
                     result.push(acc);
                 }
             }
@@ -141,8 +165,18 @@ export default class ComboboxBasic extends LightningElement {
         }
     }
 
-    resetSearch(event) {
-        this.searchingName = '';
-        this.searchOrder(event);
+    switchInputType(selectedOption) {
+        switch (selectedOption) {
+            case 'Payment_Due_Date__c' :
+                this.isDateInput = true;
+                break;
+            case 'Total_Amount__c' :
+                this.inputType = 'number';
+                this.isDateInput = false;
+                break;
+            default :
+                this.inputType = 'search';
+                this.isDateInput = false;
+        }
     }
 }
