@@ -9,13 +9,19 @@
         }
 
     @IsTest
-        static void getAccountOptionsWithoutDataNegative() {
-        try {
+        static void getAccountOptionsWithoutDataPositive() {
             List<Map<String, String>> accountOptions = FilteringActionsController.getAccountOptions();
-            System.assertEquals(0, accountOptions.size(), 'Account options is blank');
-        } catch (Exception ex) {
-            System.assertEquals('Error: No Accounts with related Orders!', ex.getMessage(), 'Account options without data');
-        }
+            System.assertEquals(1, accountOptions.size(), 'Only NONE option.');
+    }
+
+    @IsTest (SeeAllData = false)
+    static void getAccountOptionsWithoutAccessNegavite() {
+            try {
+                List<Map<String, String>> accountOptions = FilteringActionsController.getAccountOptions();
+                System.assertEquals(0, accountOptions.size(), 'Only NONE option.');
+            } catch (Exception ex) {
+                System.assertEquals('Missing select Account Id in getMonthOptions method.', ex.getMessage(), 'When method has null as argument');
+            }
     }
 
 	@IsTest

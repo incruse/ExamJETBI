@@ -2,13 +2,14 @@ import { LightningElement, api, track } from 'lwc';
 import nameLabel from '@salesforce/label/c.Name';
 import accountLabel from '@salesforce/label/c.Account';
 import totalAmountLabel from '@salesforce/label/c.TotalAmount';
+import currencyCode from '@salesforce/label/c.currencyCode';
 import paymentDueDateLabel from '@salesforce/label/c.PaymentDueDate';
 
 const columns = [
     { label: nameLabel, fieldName: 'Order Name', sortable: "true" , type: 'url' ,typeAttributes: {label: { fieldName: 'Name' }}},
     { label: accountLabel, fieldName: 'AccountURL', sortable: "true", type: 'url' ,typeAttributes: {label: { fieldName: 'Account Name' }}},
-    { label: totalAmountLabel, fieldName: 'Total_Amount__c', type: 'number', sortable: "true"},
-    { label: paymentDueDateLabel, fieldName: 'Payment_Due_Date__c', type: 'Date', sortable: "true" }
+    { label: totalAmountLabel, fieldName: 'Total_Amount__c', type: 'currency', typeAttributes: { currencyCode: currencyCode, step: '0.01' }, sortable: "true"},
+    { label: paymentDueDateLabel, fieldName: 'Payment_Due_Date__c', type: 'date', typeAttributes: { year: "numeric", month: "long", day: "2-digit" }, sortable: "true" }
 ];
 
 export default class DataTableSortingLWC extends LightningElement {
@@ -22,6 +23,7 @@ export default class DataTableSortingLWC extends LightningElement {
     get records() {
         return this._records;
     }
+
     set records(value) {
         if (!value) {
             return;

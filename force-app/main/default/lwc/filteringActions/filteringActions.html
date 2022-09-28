@@ -60,39 +60,40 @@
         <lightning-layout-item size="6">
         </lightning-layout-item>
         <lightning-layout-item size="2" padding="around-small">
-                <lightning-combobox
-                    name="ordersFilterBy"
-                    label={labels.filterBy}
-                    value={selectedOrdersFilteringBy}
-                    options={ordersFilterByOptions}
-                    onchange={tableFiltering}>
-                </lightning-combobox>
+            <lightning-combobox
+                name="ordersFilterBy"
+                label={labels.filterBy}
+                value={selectedOrdersFilteringBy}
+                options={ordersFilterByOptions}
+                onchange={tableFiltering}>
+            </lightning-combobox>
         </lightning-layout-item>
-        <lightning-layout-item size="4" padding="around-small">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label">{labels.name}</label>
-                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left-right">
-                    <lightning-icon
-                        size="x-small"
-                        class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"
-                        icon-name="utility:search">
-                    </lightning-icon>
-                    <template if:true={isTypingInSearch}>
-                        <button class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default slds-button"
-                                onclick={resetSearch}>
-                            <lightning-icon
-                                size="x-small"
-                                class="slds-button__icon"
-                                icon-name="utility:close">
-                            </lightning-icon>
-                        </button>
-                    </template>
-                    <input
-                        class="slds-input"
-                        value={searchingName}
-                        onkeyup={searchOrder}/>
-                </div>
-            </div>
+        <lightning-layout-item if:false={isDateInput} size="4" padding="around-small">
+            <lightning-input
+                name="searchOrderByField"
+                type={inputType}
+                label={labels.name}
+                onchange={searchOrder}
+                value={searchingName}>
+            </lightning-input>
         </lightning-layout-item>
+        <lightning-layout-item size="2" if:true={isDateInput} padding="around-small">
+            <lightning-input
+                name="Date From"
+                type="date"
+                label={labels.from}
+                onchange={datePicker}
+                value={dateFrom}>
+            </lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="2" if:true={isDateInput} padding="around-small">
+        <lightning-input
+            name="Date To"
+            type="date"
+            label={labels.to}
+            onchange={datePicker}
+            value={dateTo}>
+        </lightning-input>
+    </lightning-layout-item>
     </lightning-layout>
 </template>

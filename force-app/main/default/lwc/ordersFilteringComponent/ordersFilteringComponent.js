@@ -48,20 +48,42 @@ export default class OrdersFilteringComponent extends LightningElement {
         this.selectedMonth = event.detail;
     }
 
-    getFieldNameFilter(event) {
+    orderFiltering(event) {
         let field = event.detail.searchFrom;
         this.recordsData = this.records;
-        let searchName = event.detail.value;
         let result = [];
-        if (searchName) {
+        this.isLoaded = true;
+        if (event.detail.dateFrom || event.detail.dateTo) {
+            this.recordsData = this.dateFiltering(event);
+        }
+        if (event.detail.value) {
             for (let order of JSON.parse(JSON.stringify(this.records))) {
-                let searchFrom = Object.keys(order).filter( el => el == field);
-                if (order[field].toUpperCase().includes(searchName.toUpperCase())) {
+                if (order[field].toString().toUpperCase().includes(event.detail.value.toUpperCase())) {
                     result.push(order);
                 }
             }
             this.recordsData = result;
         }
+        this.isLoaded = false;
+    }
+
+    dateFiltering(event) {
+        let result = [];
+        let dateFrom = event.detail.dateFrom ? event.detail.dateFrom : null;
+        let dateTo = event.detail.dateTo ? event.detail.dateTo : null;
+        JSON.parse(JSON.stringify(this.records)).forEach( (item, index) => {
+            let orderDate = item.Payment_Due_Date__c;
+            if (dateFrom && !dateTo) {
+                orderDate >= dateFrom ? result.push(item) : null;
+            }
+            if (dateTo && !dateFrom) {
+                orderDate <= dateTo ? result.push(item) : null;
+            }
+            if (dateFrom && dateTo) {
+                orderDate >= dateFrom && orderDate <= dateTo ? result.push(item) : null;
+            }
+        })
+        return result;
     }
 
     showToast(title, message, variant) {
