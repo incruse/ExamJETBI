@@ -24,8 +24,14 @@ I should have created an application that filters entries in a certain object ba
 * Custom Labels
 
 ### Screenshots
-##### How it works.
-![How it work](./img/Presentation.gif)
+##### Fetching by account and month.
+![How it work](./img/presentation%201.gif)
+##### Filtracing by Name.
+![How it work](./img/presentation%202.gif)
+##### Filtracing by period of date.
+![How it work](./img/presentation%203.gif)
+##### Email sending.
+![How it work](./img/presentation%204.gif)
 ##### Application home page.
 ![App page](./img/AppPage.jpg)
 ##### Record page of Order.
