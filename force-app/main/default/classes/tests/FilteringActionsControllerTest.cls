@@ -21,7 +21,7 @@ private class FilteringActionsControllerTest {
             List<Map<String, String>> monthOptions = FilteringActionsController.getMonthOptions(null);
             System.assertEquals(0, monthOptions.size(), 'Month options is blank');
         } catch (Exception ex) {
-            System.assertEquals('Missing select Account Id in getMonthOptions method.', ex.getMessage(), 'When method has null as argument');
+            System.assertEquals('Missing selected Account Id.', ex.getMessage(), 'When method has null as argument');
         }
     }
 
