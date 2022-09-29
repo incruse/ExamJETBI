@@ -26,7 +26,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error</shortDescription>
-        <value>Error</value>
+        <value>Error: </value>
     </labels>
     <labels>
         <fullName>Filter_by</fullName>

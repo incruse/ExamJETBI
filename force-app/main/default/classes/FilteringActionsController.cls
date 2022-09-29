@@ -9,7 +9,7 @@ public with sharing class FilteringActionsController {
         try {
             return fetchAccounts();
         } catch (Exception ex) {
-            throw new IllegalArgumentException(Label.Error + ex.getMessage());
+            throw new IllegalArgumentException(Label.Error + ' ' + ex.getMessage());
         }
     }
 
@@ -21,7 +21,7 @@ public with sharing class FilteringActionsController {
         try {
             return fetchMonth(selectedAccount);
         } catch (Exception ex) {
-            throw new IllegalArgumentException(Label.Error + ex.getMessage());
+            throw new IllegalArgumentException(Label.Error + ' ' + ex.getMessage());
         }
     }
 

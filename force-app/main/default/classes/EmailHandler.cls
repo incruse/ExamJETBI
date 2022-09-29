@@ -18,7 +18,7 @@ public with sharing class EmailHandler {
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
             return UserInfo.getUserEmail();
         } catch (Exception ex) {
-            throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
+            throw new IllegalArgumentException(Label.Error + ' ' + ex.getMessage());
         }
     }
 
