@@ -1,5 +1,5 @@
 @IsTest
-	public class EmailHandlerTest {
+public class EmailHandlerTest {
 	@IsTest
     static void sendEmailPositive() {
         TestDataFactory.createAccounts(1);

@@ -20,20 +20,22 @@ export default class OrdersFilteringComponent extends LightningElement {
                       selectedMonth: '$selectedMonth'}) waredOrders(result, error) {
         if (result && result?.data) {
             this.records = JSON.parse(JSON.stringify(result.data));
-            this.records.forEach(item => item['Order Name'] = '/' + item['Id']);
-            this.records.forEach(item => item['Account Name'] = item['Account__r'].Name);
-            this.records.forEach(item => item['AccountURL'] = '/' + item['Account__c']);
+            this.records.forEach(item => {
+                item['Order Name'] = '/' + item['Id'];
+                item['Account Name'] = item['Account__r'].Name;
+                item['AccountURL'] = '/' + item['Account__c'];
+            });
             this.recordsData = this.records;
             this.isLoaded = false;
         } else if (error) {
-            this.showToast(labelError + '! ', error, 'error');
+            this.showToast(labelError, error, 'error');
             this.records = [];
-            this.recordsData = this.records;
+            this.recordsData = [];
         }
     }
 
     getAccountFilter(event) {
-        if (event.detail == '') {
+        if (!event.detail) {
             this.isLoaded = true;
             this.selectedAccount = null;
         }
@@ -41,7 +43,7 @@ export default class OrdersFilteringComponent extends LightningElement {
     }
 
     getMonthFilter(event) {
-        if (event.detail == '') {
+        if (!event.detail) {
             this.isLoaded = true;
             this.selectedMonth = null;
         }
@@ -69,8 +71,8 @@ export default class OrdersFilteringComponent extends LightningElement {
 
     dateFiltering(event) {
         let result = [];
-        let dateFrom = event.detail.dateFrom ? event.detail.dateFrom : null;
-        let dateTo = event.detail.dateTo ? event.detail.dateTo : null;
+        let dateFrom = event.detail.dateFrom;
+        let dateTo = event.detail.dateTo;
         JSON.parse(JSON.stringify(this.records)).forEach( (item, index) => {
             let orderDate = item.Payment_Due_Date__c;
             if (dateFrom && !dateTo) {

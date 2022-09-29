@@ -1,5 +1,5 @@
 @IsTest
-	private class OrdersResultControllerTest {
+private class OrdersResultControllerTest {
     @TestSetup
     static void setup() {
         TestDataFactory.createAccounts(5);

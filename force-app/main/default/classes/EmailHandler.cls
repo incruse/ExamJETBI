@@ -1,22 +1,22 @@
 public with sharing class EmailHandler {
     @AuraEnabled
     public static String sendEmail(Id recordId) {
-        if (recordId == null) {
+        if (String.isBlank(recordId)) {
             throw new IllegalArgumentException(Label.NoMatchIdOfRecord);
         }
         try {
-            Messaging.SingleEmailMessage email = createEmail(recordId);
-            email.setSaveAsActivity(false);
-            Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
-            return UserInfo.getUserEmail();
+            return createEmail(recordId);
         } catch (Exception ex) {
             throw new IllegalArgumentException(ex.getMessage());
         }
     }
 
-    private static Messaging.SingleEmailMessage createEmail(Id recordId) {
+    private static String createEmail(Id recordId) {
         try {
-            return Messaging.renderStoredEmailTemplate(getEmailTemplate().Id, UserInfo.getUserId(), recordId);
+            Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(getEmailTemplate().Id, UserInfo.getUserId(), recordId);
+            email.setSaveAsActivity(false);
+            Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+            return UserInfo.getUserEmail();
         } catch (Exception ex) {
             throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
         }
