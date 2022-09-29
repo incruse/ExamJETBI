@@ -11,14 +11,14 @@
         </lightning-layout>
 
         <lightning-layout >
-            <lightning-layout-item >
-                <div if:true={isLoaded}>
-                    <lightning-spinner
+            <div if:true={isLoaded}>
+                <lightning-spinner
                         alternative-text={labelLoading}
                         variant="brand"
                         size="medium">
-                    </lightning-spinner>
-                </div>
+                </lightning-spinner>
+            </div>
+            <lightning-layout-item >
                 <c-orders-result
                         title={title}
                         records={recordsData}>

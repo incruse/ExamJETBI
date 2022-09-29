@@ -9,19 +9,19 @@ public with sharing class FilteringActionsController {
         try {
             return fetchAccounts();
         } catch (Exception ex) {
-            throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
+            throw new IllegalArgumentException(Label.Error + ex.getMessage());
         }
     }
 
     @AuraEnabled(Cacheable=true)
     public static List<Map<String, String>> getMonthOptions(String selectedAccount) {
         if (String.isBlank(selectedAccount)) {
-            throw new IllegalArgumentException(Label.MissingSelectAccountIdInGetMonthOptionsMethod);
+            throw new IllegalArgumentException(Label.MissingAccId);
         }
         try {
             return fetchMonth(selectedAccount);
         } catch (Exception ex) {
-            throw new IllegalArgumentException(Label.Error + ': ' + ex.getMessage());
+            throw new IllegalArgumentException(Label.Error + ex.getMessage());
         }
     }
 
@@ -31,18 +31,15 @@ public with sharing class FilteringActionsController {
         query += ' FROM Account WHERE Id IN (SELECT Account__c FROM Order__c)';
         query += ' ORDER BY Name ASC LIMIT 49999';
         List<Account> accounts = Database.query(query);
-        if (accounts.isEmpty()) {
-            result.add(noneOptions);
-            return result;
-        } else {
+        if (!accounts.isEmpty()) {
             for (Account acc : accounts) {
                 Map<String, String> values = new Map<String, String>();
                 values.put('label' , acc.Name);
                 values.put('value', String.valueOf(acc.Id));
                 result.add(values);
             }
+            result.add(0, noneOptions);
         }
-        result.add(0, noneOptions);
         return result;
     }
 

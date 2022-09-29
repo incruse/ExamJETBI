@@ -24,7 +24,7 @@ export default class ComboboxBasic extends LightningElement {
     searchingName = '';
     accounts = [];
     accountsOptions = [];
-    month;
+    month = [];
     dateFrom = '';
     dateTo = '';
     inputType = 'search';
@@ -45,10 +45,10 @@ export default class ComboboxBasic extends LightningElement {
         monthPicklistPlaceholder : placeholderMonthPicklist
     };
     ordersFilterByOptions = [
-            { label: this.labels.orderName , value: 'Name' },
-            { label: this.labels.accountName, value: 'Account Name' },
-            { label: this.labels.paymentDueDate, value: 'Payment_Due_Date__c' },
-            { label: this.labels.totalAmount, value: 'Total_Amount__c' }
+        { label: this.labels.orderName , value: 'Name' },
+        { label: this.labels.accountName, value: 'Account Name' },
+        { label: this.labels.paymentDueDate, value: 'Payment_Due_Date__c' },
+        { label: this.labels.totalAmount, value: 'Total_Amount__c' }
     ];
     @wire(getAccountOptions)
     wiredAccounts({error, data}) {
@@ -66,10 +66,7 @@ export default class ComboboxBasic extends LightningElement {
         this.selectedAccount = event.currentTarget.dataset.label;
         let account = event.currentTarget.dataset.value;
         if (this.selectedAccount == noneLabel) {
-            this.selectedAccount = '';
-            this.selectedMonth = '';
-            this.dateFrom = '';
-            this.dateTo = '';
+            this.resetParameters(['selectedAccount', 'selectedMonth', 'dateFrom', 'dateTo']);
             this.month = [];
             account = '';
             this.accountsOptions = this.accounts;
@@ -80,29 +77,29 @@ export default class ComboboxBasic extends LightningElement {
             getMonthOptions({ selectedAccount: account})
                 .then(result => {
                     this.month = result;
-                    })
+                })
                 .catch(error => {
-                this.showToast(labelError + '! ', error.body.message, 'error');
+                    this.showToast(labelError, error.body.message, 'error');
                 });
             this.eventDispatcher('monthselected', this.selectedMonth);
-            }
+        }
     }
 
     filterByMonth(event) {
         this.selectedMonth = event.detail.value;
             if (this.selectedMonth == noneLabel) {
-            this.selectedMonth = '';
+                this.selectedMonth = '';
             }
         this.eventDispatcher('monthselected', this.selectedMonth);
     }
 
     showToast(tittle, message, variant) {
-    const event = new ShowToastEvent({
-        title: tittle,
-        message: message,
-        variant: variant
-    });
-    this.dispatchEvent(event);
+        const event = new ShowToastEvent({
+            title: tittle,
+            message: message,
+            variant: variant
+        });
+        this.dispatchEvent(event);
     }
 
     eventDispatcher(nameEvent, eventDetail) {
@@ -121,9 +118,7 @@ export default class ComboboxBasic extends LightningElement {
 
     tableFiltering(event) {
         this.selectedOrdersFilteringBy = event.detail.value;
-        this.searchingName = '';
-        this.dateFrom = '';
-        this.dateTo = '';
+        this.resetParameters(['searchingName', 'dateFrom', 'dateTo']);
         this.switchInputType(this.selectedOrdersFilteringBy);
         this.eventDispatcher('searchorder', {
             searchFrom: this.selectedOrdersFilteringBy,
@@ -163,6 +158,10 @@ export default class ComboboxBasic extends LightningElement {
             result.unshift(accounts[0]);
             this.accountsOptions = result;
         }
+    }
+
+    resetParameters(parameters) {
+        parameters.forEach( item => this[item] = '' );
     }
 
     switchInputType(selectedOption) {

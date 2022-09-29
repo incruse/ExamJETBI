@@ -36,6 +36,13 @@
         <value>Filter by:</value>
     </labels>
     <labels>
+        <fullName>From</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>From</shortDescription>
+        <value>From</value>
+    </labels>
+    <labels>
         <fullName>Loading</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -43,11 +50,11 @@
         <value>Loading...</value>
     </labels>
     <labels>
-        <fullName>MissingSelectAccountIdInGetMonthOptionsMethod</fullName>
+        <fullName>MissingAccId</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Missing select Account Id in getMonthOptions method.</shortDescription>
-        <value>Missing select Account Id in getMonthOptions method.</value>
+        <shortDescription>Missing selected Account Id</shortDescription>
+        <value>Missing selected Account Id.</value>
     </labels>
     <labels>
         <fullName>Month</fullName>
@@ -120,18 +127,18 @@
         <value>Select Month</value>
     </labels>
     <labels>
-        <fullName>Success</fullName>
+        <fullName>SuccessSendOrder</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Success</shortDescription>
-        <value>Success</value>
+        <shortDescription>Success send order</shortDescription>
+        <value>Success! The order successfully sent to</value>
     </labels>
     <labels>
-        <fullName>TheRecord</fullName>
+        <fullName>To</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>The record</shortDescription>
-        <value>The record</value>
+        <shortDescription>To</shortDescription>
+        <value>To</value>
     </labels>
     <labels>
         <fullName>TotalAmount</fullName>
@@ -141,24 +148,10 @@
         <value>Total Amount</value>
     </labels>
     <labels>
-        <fullName>Total_Amount</fullName>
+        <fullName>currencyCode</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Total Amount</shortDescription>
-        <value>Total Amount</value>
-    </labels>
-    <labels>
-        <fullName>successfullySent</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>successfully sent</shortDescription>
-        <value>successfully sent to</value>
-    </labels>
-    <labels>
-        <fullName>successfully_sent</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>successfully sent</shortDescription>
-        <value>successfully sent to</value>
+        <shortDescription>currencyCode</shortDescription>
+        <value>USD</value>
     </labels>
 </CustomLabels>
