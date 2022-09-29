@@ -27,7 +27,7 @@ I should have created an application that filters entries in a certain object ba
 ##### How it works.
 ![How it work](./img/Presentation.gif)
 ##### Application home page.
-![App page](./img/App%20Page.jpg)
+![App page](./img/AppPage.jpg)
 ##### Record page of Order.
 ![Record page](./img/Record%20Page.jpg)
 ##### Email example.
